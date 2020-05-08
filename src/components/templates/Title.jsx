@@ -2,8 +2,6 @@ import React from 'react';
 
 export default function Title({title}) {
     return (
-        <div>
-            {title}
-        </div>
+        <h1 className="text-title">{title}</h1>
     )
 }

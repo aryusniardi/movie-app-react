@@ -9,7 +9,7 @@
 * {
   font-family: 'Montserrat', sans-serif !important;
   background: var(--mainDark) !important;
-  color: var(--mainLight) !important;  
+  color: var(--mainLight);  
 }
 
 body {
@@ -17,8 +17,8 @@ body {
 }
 
 .text-title {
-  font-weight: bolder;
-  letter-spacing: .2vw;
+  font-weight: 400;
+  letter-spacing: .3vw;
 }
 
 .navbar-brand.img {
