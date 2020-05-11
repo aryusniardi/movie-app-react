@@ -1,33 +1,99 @@
 :root {
   --mainRed: #8f1d14;
   --secondaryRed: #be3737;
-  --mainDark: #1f1f1f;
+  --mainDark: #0f0f0f;
   --secondaryDark: #323232;
   --mainLight: #e6dedd;
 }
 
 * {
   font-family: 'Montserrat', sans-serif !important;
-  background: var(--mainDark) !important;
   color: var(--mainLight);  
 }
 
 body {
   width: 100%;
+  background-color: var(--mainDark) !important;
+}
+
+#navbar {
+  background-color: var(--mainDark) !important;
+  position: fixed;
+  display: block !important;
+  top: -9vh;
+  width: 100%;
+  transition: top 0.3s;
+  z-index: 5;
+}
+
+.masthead {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  min-height: 500px;
+}
+
+.image-masthead {
+  padding: 0;
+  margin: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  min-height: 500px;
+  position: absolute;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(85%);
+}
+
+.vertical-center {
+  min-height: 100vh;
+  /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+.form-box {
+  min-height: 60vh auto;
+  min-width: 30vw;
+  right: 0;
+  top: 20vh;
+  padding: 25px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 7px;
+}
+
+.hr-white {
+  color: white;
+  background-color: white;
+}
+
+.input-group {
+  border-radius: 20px !important;
+}
+
+.input-group:focus {
+  border-color: var(--mainLight) !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25) !important;
+}
+
+.rounded-button {
+  border-radius: 20px !important;
 }
 
 .text-title {
-  font-weight: 400;
-  letter-spacing: .3vw;
+  font-weight: 700;
+  letter-spacing: .25vw;
 }
 
 .navbar-brand.img {
-  height: 10vh;
+  height: 8vh;
   margin-right: -.5vw;
 }
 
 .navbar_brand {
-  font-size: 5vh;
+  font-size: 4vh;
   display: inline-block;
   vertical-align: bottom;
   font-weight: 900;
