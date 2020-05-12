@@ -1,39 +1,44 @@
 import React, {Component} from 'react';
-import {Navbar} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {Navbar, Container, Button} from 'react-bootstrap';
 import Logo from '../../assets/logo.svg';
 
 export default class NavigationBar extends Component {
-    componentDidMount() {
-        window.addEventListener('scroll', this.scrollFunction)
-    }
+    // componentDidMount() {
+    //     window.addEventListener('scroll', this.scrollFunction)
+    // }
     
-    scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.getElementById("navbar").style.top = "0";
-        } else {
-            document.getElementById("navbar").style.top = "-9vh";
-        }
-    }
+    // scrollFunction() {
+    //     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    //         document.getElementById("navbar").style.top = "0";
+    //     } else {
+    //         document.getElementById("navbar").style.top = "-9vh";
+    //     }
+    // }
 
     render() {
         return (
-          <div id="navbar">
-            <Navbar sticky="top" bg="transparent" variant="dark">
-              <Link to="/" className="justify-content-center mx-auto">
-                <img src={Logo} alt="movie" className="navbar-brand img" />
+          <Navbar variant="dark" expand="lg" fixed="top" className="px-5 navigationBar">
+              <Navbar.Brand href="#home">
+                <img
+                  alt=""
+                  src={Logo}
+                  height="30"
+                  className="d-inline-block align-top navbar-brand img navigationBar"
+                />{' '}
                 <h1 className="navbar_brand">Movie</h1>
-              </Link>
-            </Navbar>
-          </div>
+              </Navbar.Brand>
+              <Button size="md" variant="danger" className="ml-auto font-weight-bold navigationBar" style={{ width: `10vw`}}>
+                  Sign in
+              </Button>
+          </Navbar>
         );
     }
 }
 
-window.scroll = function() {
-    scrollFunction()
-}
+// window.scroll = function() {
+//     scrollFunction()
+// }
 
-function scrollFunction() {
+// function scrollFunction() {
     
-}
+// }

@@ -7,7 +7,7 @@ export default class Signin extends Component {
     super(props);
 
     this.state = {
-      email: "",
+      username: "",
       password: "",
       isLoaded: false,
       popular: [],
@@ -37,9 +37,9 @@ export default class Signin extends Component {
     this.fetchPopular();
   }
 
-  updateEmail(value) {
+  updateUsername(value) {
     this.setState({
-      email: value
+      username: value
     })
   }
 
@@ -49,13 +49,13 @@ export default class Signin extends Component {
     })
   }
 
-  submit(email, password) {
-    console.log(email + password)
+  submit(username, password) {
+    console.log(username + password)
   }
 
   render() {
     const {
-      email,
+      username,
       password,
       error,
       popular,
@@ -86,11 +86,11 @@ export default class Signin extends Component {
                     <Form.Group controlId="formBasicEmail" className="mb-3">
                       <Form.Control
                         size="lg"
-                        type="email"
-                        placeholder="Email Address"
+                        type="text"
+                        placeholder="Username"
                         className="input-group"
                         onChange={(event) => {
-                          this.updateEmail(event.target.value)
+                          this.updateUsername(event.target.value)
                         }}
                         value={this.state.email}
                       />
@@ -115,7 +115,7 @@ export default class Signin extends Component {
                       block
                       className="rounded-button mb-3"
                       onClick={() => {
-                        this.submit(email, password)
+                        this.submit(username, password)
                       }}
                     >
                       <b>SIGN IN</b>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Link} from 'react-router-dom';
-import {Container, Row, Col, Image, Form, Button} from 'react-bootstrap';
+import {Container, Row, Col, Image, Form, Button, Alert} from 'react-bootstrap';
 
 export default class Register extends Component {  
   constructor(props) {
@@ -10,7 +10,6 @@ export default class Register extends Component {
         first_name: '',
         last_name: '',
         username: '',
-        email: '',
         password: '',
         confirmation: '',
         isLoaded: false,
@@ -49,12 +48,6 @@ export default class Register extends Component {
     })
   }
 
-  updateEmail(value) {
-    this.setState({
-      email : value
-    })
-  }
-
   updateUsername(value) {
     this.setState({
       username: value
@@ -73,12 +66,42 @@ export default class Register extends Component {
     })
   }
 
+  submit (first_name, last_name, username, password, confirmation) {
+    if (password !== null && password === confirmation) {
+      console.log(`
+        first name : ${first_name} 
+        last name: ${last_name}
+        username: ${username}
+        password: ${password}
+        confirmation: ${confirmation}`
+        )
+        return (
+          <Alert variant="success">
+            <Alert.Heading>Hey, nice to see you</Alert.Heading>
+            <p>
+              Aww yeah, you successfully read this important alert message. This example
+              text is going to run a bit longer so that you can see how spacing within an
+              alert works with this kind of content.
+            </p>
+              <hr />
+              <p className="mb-0">
+                Whenever you need to, be sure to use margin utilities to keep things nice
+                and tidy.
+            </p>
+          </Alert>
+        )
+        // window.location.href = '/login'
+    } else {
+      console.log('Password tidak sama')
+    }
+  }
+
   componentDidMount() {
       this.fetchPopular()
   }
 
   render() {
-      const {first_name, last_name, email, password, confirmation, error, popular, isLoaded} = this.state;
+      const {first_name, last_name, username, password, confirmation, error, popular, isLoaded} = this.state;
         if (error) {
           return <div>Error : {error.mesage}</div>;
       } else if (!isLoaded) {
@@ -86,7 +109,7 @@ export default class Register extends Component {
       } else {
           return (
             <React.Fragment>
-              {popular.slice(1, 2).map((movie) => (
+              {popular.slice(2, 3).map((movie) => (
                 <Image
                   src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                   className="image-masthead"
@@ -110,6 +133,7 @@ export default class Register extends Component {
                             type="text"
                             placeholder="First Name"
                             className="input-group"
+                            required
                             onChange={(event) => {
                               this.updateFirstName(event.target.value)
                             }}
@@ -126,6 +150,7 @@ export default class Register extends Component {
                             type="text"
                             placeholder="Last Name"
                             className="input-group"
+                            required
                             onChange={(event) => {
                               this.updateLastName(event.target.value)
                             }}
@@ -139,13 +164,14 @@ export default class Register extends Component {
                         >
                           <Form.Control
                             size="lg"
-                            type="email"
-                            placeholder="Email Address"
+                            type="text"
+                            placeholder="Username"
                             className="input-group"
+                            required
                             onChange={(event) => {
-                              this.updateEmail(event.target.value)
+                              this.updateUsername(event.target.value)
                             }}
-                            value={this.state.email}
+                            value={this.state.username}
                           />
                           <Form.Text className="text-white">
                             We'll never share your email with anyone else.
@@ -161,6 +187,7 @@ export default class Register extends Component {
                             type="password"
                             placeholder="Password"
                             className="input-group"
+                            required
                             onChange={(event) => {
                               this.updatePassword(event.target.value)
                             }}
@@ -176,6 +203,7 @@ export default class Register extends Component {
                             type="password"
                             placeholder="Type your password again"
                             className="input-group"
+                            required
                             onChange={(event) => {
                               this.updateCofirmPassword(event.target.value)
                             }}
@@ -192,19 +220,7 @@ export default class Register extends Component {
                           block
                           className="rounded-button mb-3"
                           onClick={() => {
-                            if (password !== null && password === confirmation) {
-                              console.log(`
-                                first name : ${first_name} 
-                                last name: ${last_name}
-                                email: ${email}
-                                password: ${password}
-                                confirmation: ${confirmation}`
-                              )
-                              window.location.href = '/'
-                            } else {
-                              console.log('Password tidak sama')
-                            }
-                            this.submit(first_name, last_name, email, password, confirmation)
+                            this.submit(first_name, last_name, username, password, confirmation)
                           }}
                         >
                           <b>CREATE ACCOUNT</b>
