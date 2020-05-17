@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Image, Form, Button } from "react-bootstrap";
+import {Form, Button } from "react-bootstrap";
+import Instagram from '../../assets/instagram.svg';
+import Facebook from '../../assets/facebook.svg';
+import Twitter from '../../assets/twitter.svg';
 
 export default class Signin extends Component {
   constructor(props) {
@@ -69,21 +72,16 @@ export default class Signin extends Component {
       return (
         <React.Fragment>
           {popular.slice(8, 9).map((movie) => (
-            <Image
-              src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-              className="image-masthead"
-            />
-          ))}
-          <header className="masthead vertical-center">
-            <Container>
-              <Row>
-                <Col md={{ span: 6, offset: 3 }}>
-                  <Form className="form-box p-5">
-                    <h1 className="text-center font-weight-bold">
-                      Sign In
-                    </h1>
-                    <hr />
-                    <Form.Group controlId="formBasicEmail" className="mb-3">
+            <>
+            <header className="masthead-form-login" style={{ zIndex: `1`, backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.7) 25%, rgba(0, 0, 0, 0.7) 75%, rgba(0, 0, 0, 1) 100%), url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')` }} />
+                <div className = "h-100 section-center box-login vertical-center w-100">
+                  <div className=" justify-content-center mx-auto">
+                    <Form className="form-box">
+                      <h2 className="text-center font-weight-bold text-title text-white mx-auto">
+                        Sign In
+                      </h2>
+                        <hr />
+                        <Form.Group controlId="formBasicEmail" className="mb-3">
                       <Form.Control
                         size="lg"
                         type="text"
@@ -132,11 +130,41 @@ export default class Signin extends Component {
                         </Link>
                       </Form.Text>
                     </Form.Group>
-                  </Form>
-                </Col>
-              </Row>
-            </Container>
-          </header>
+                      <div>
+                        <div className="d-flex justify-content-center align-items-center">
+                          <div className="form-border w-25"/>
+                          <h5 className="mx-3 mt-2">
+                            or sign in with
+                          </h5>
+                          <div className="form-border w-25"/>
+                        </div>
+                        <div className="d-flex justify-content-center align-items-center mt-3">
+                          <img
+                            alt=""
+                            src={Instagram}
+                            height="25"
+                            className="d-block img mx-5"
+                            />
+                          <img
+                            alt=""
+                            src={Twitter}
+                            height="25"
+                            className="d-block img mx-5"
+                          />
+                          <img
+                            alt=""
+                            src={Facebook}
+                            height="25"
+                            className="d-block img mx-5"
+                          />
+
+                        </div>
+                      </div>
+                      </Form>
+                  </div>
+                </div>
+                </>
+          ))}
         </React.Fragment>
       );
     }

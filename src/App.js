@@ -13,10 +13,10 @@ function App() {
     <React.Fragment>
       <Switch>
         <Route exact path="/" component={Landing} />
+        <Route path="/main" component={MovieList} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Signin} />
-        <Route path="/login" component={Detail} />
-        <Route path="/details" component={Detail} />
+        <Route path="/detail/:id" component={Detail} />
         <Route component={Default}/>
       </Switch>
     </React.Fragment>

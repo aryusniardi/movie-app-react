@@ -1,44 +1,42 @@
 import React, {Component} from 'react';
-import {Navbar, Container, Button} from 'react-bootstrap';
-import Logo from '../../assets/logo.svg';
+import {Navbar} from 'react-bootstrap';
+import ModalSignIn from '../component/modal-signin';
+import Logo from '../../assets/logo.png';
 
 export default class NavigationBar extends Component {
-    // componentDidMount() {
-    //     window.addEventListener('scroll', this.scrollFunction)
-    // }
-    
-    // scrollFunction() {
-    //     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    //         document.getElementById("navbar").style.top = "0";
-    //     } else {
-    //         document.getElementById("navbar").style.top = "-9vh";
-    //     }
-    // }
+  componentDidMount() {
+    window.addEventListener('scroll', this.scrollFunction)
+    this.scrollFunction()
+  }
 
-    render() {
-        return (
-          <Navbar variant="dark" expand="lg" fixed="top" className="px-5 navigationBar">
-              <Navbar.Brand href="#home">
-                <img
-                  alt=""
-                  src={Logo}
-                  height="30"
-                  className="d-inline-block align-top navbar-brand img navigationBar"
-                />{' '}
-                <h1 className="navbar_brand">Movie</h1>
-              </Navbar.Brand>
-              <Button size="md" variant="danger" className="ml-auto font-weight-bold navigationBar" style={{ width: `10vw`}}>
-                  Sign in
-              </Button>
-          </Navbar>
-        );
+  scrollFunction() {
+    if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+      document.getElementById("navbar").style.backgroundColor = "#0f0f0f";
+    } else {
+      document.getElementById("navbar").style.backgroundColor = "transparent !important";
     }
+  }
+
+  render() {
+    return (
+      <Navbar
+        id="navbar"
+        variant="dark"
+        expand="lg"
+        fixed="top"
+        className="px-5 navigationBar"
+      >
+        <Navbar.Brand href="/">
+          <img
+            alt=""
+            src={Logo}
+            height="30"
+            className="d-inline-block align-top navbar-brand img navigationBar"
+          />{" "}
+          <h1 className="navbar_brand">Movie</h1>
+        </Navbar.Brand>
+        <ModalSignIn/>
+      </Navbar>
+    );
+  }
 }
-
-// window.scroll = function() {
-//     scrollFunction()
-// }
-
-// function scrollFunction() {
-    
-// }
