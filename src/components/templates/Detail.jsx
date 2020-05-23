@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {Row, Col} from 'react-bootstrap'
+import {Row, Col} from 'reactstrap'
 import StarRatings from 'react-star-ratings';
 import PropTypes from "prop-types";
-import Credit from '../component/credits'
 import Carousel from "react-multi-carousel";
 
 class Detail extends Component {
@@ -181,15 +180,6 @@ class Detail extends Component {
                   itemClass="mx-1"
                   showDots={false}
                 >
-                  {credits.map((cast) => (
-                    <Credit
-                      key={cast.id}
-                      id={cast.id}
-                      name={cast.character}
-                      profile={cast.profile_path}
-                    // title={movie.title}
-                    />
-                  ))}
                 </Carousel>
               </Col>
                 {/* <Carousel

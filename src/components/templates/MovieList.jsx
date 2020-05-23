@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import MovieJumbotron from '../component/jumbotron-movie'
 import Movie from './Movie';
-import Navbar from "./Navbar";
 import Genre from "../component/genre"
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -191,10 +189,8 @@ class MovieList extends Component {
     } else {
       return (
         <React.Fragment>
-          <Navbar />
-
           <div>
-            {topRated.slice(9, 10).map((movie) => (
+            {/* {topRated.slice(9, 10).map((movie) => (
               <MovieJumbotron
                 movie_id={movie.id}
                 title={movie.title}
@@ -202,7 +198,7 @@ class MovieList extends Component {
                 poster_path={movie.backdrop_path}
                 backdrop_path={movie.backdrop_path}
               />
-            ))}
+            ))} */}
           </div>
 
           {/* <h1 className="text-title text-center carousel-title my-3">

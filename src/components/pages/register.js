@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Link} from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
-import {Container, Row, Col, Image, Form, Button, Alert} from 'react-bootstrap';
+import {Form, Button, Alert} from 'reactstrap';
 import Instagram from '../../assets/instagram.svg';
 import Twitter from '../../assets/twitter.svg';
 import Facebook from '../../assets/facebook.svg';

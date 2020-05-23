@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card} from 'react-bootstrap';
+import {Card} from 'reactstrap';
 import {Link} from 'react-router-dom'
 
 export default function({id, title, overview, poster}) {
