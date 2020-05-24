@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {useHistory, Redirect, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import PropTypes from "prop-types";
 export default class Login extends Component {
     constructor(props) {
         super(props)
@@ -16,12 +17,18 @@ export default class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    static propTypes = {
+        history: PropTypes.object.isRequired
+    };
+
     handleSubmit(event) {
         const {username, password, token} = this.state
+        const { history } = this.props;
         
-        fetch('https://api.themoviedb.org/3/authentication/token/new?api_key=e526577fc936f61b1a3711898d02e8dd', 
+        fetch('https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=e526577fc936f61b1a3711898d02e8dd', 
         {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
                 'username' : username,
                 'password' : password,
@@ -29,8 +36,9 @@ export default class Login extends Component {
             })
         }).then((response) => response.json()
         ).then((response) => {
-            if (response.data.status === 200) {
+            if (response.success === true) {
                 console.log(username, password, token)
+                history.push('/')
             }
         }).catch((error) => console.log("Login error", error))
         event.preventDefault()
