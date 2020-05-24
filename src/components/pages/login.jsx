@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {useHistory, Link} from 'react-router-dom'
+import {useHistory, Redirect, Link} from 'react-router-dom'
 export default class Login extends Component {
     constructor(props) {
         super(props)
@@ -13,7 +13,29 @@ export default class Login extends Component {
             trending: []
 
         }
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
+
+    handleSubmit(event) {
+        const {username, password, token} = this.state
+        
+        fetch('https://api.themoviedb.org/3/authentication/token/new?api_key=e526577fc936f61b1a3711898d02e8dd', 
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                'username' : username,
+                'password' : password,
+                'request_token' : token
+            })
+        }).then((response) => response.json()
+        ).then((response) => {
+            if (response.data.status === 200) {
+                console.log(username, password, token)
+            }
+        }).catch((error) => console.log("Login error", error))
+        event.preventDefault()
+    }
+
 
     fetchTrending() {
         fetch('https://api.themoviedb.org/3/trending/all/day?api_key=e526577fc936f61b1a3711898d02e8dd', 
@@ -41,75 +63,31 @@ export default class Login extends Component {
         }).catch((error) => this.setState({error, isLoaded: true}))
     }
 
-    getUser(username, password, token) {
-        const history = useHistory()
-
-        fetch('https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=e526577fc936f61b1a3711898d02e8dd', 
-        {
-            method: "POST",
-            body: JSON.stringify({
-                'email': `${username}`,
-                'password': `${password}`, 
-                'request_token': `${token}`
-            })
-        }).then((response) => {
-            if (response.success === true) {
-                history.push('/')
-            } else {
-                this.setState({
-                    error: response.success
-                })
-            }
-        }).catch((error) => {
-            this.setState({
-                error: error.message
-            })
-        })
-    }
-
     componentDidMount() {
         this.fetchTrending()
         this.requestToken()
     }
 
-    updateUsername(value) {
+    usernameHandleChanges(value) {
         console.log(`Username : ${value}`)
         this.setState({
             username: value
         })
     }
 
-    updatePassword(value) {
+    passwordHandleChanges(value) {
         console.log(`password : ${value}`)
         this.setState({
             password: value
         })
     }
 
-    submit(username, password, token) {
-        if (username.length === 0) {
-            this.setState({
-                error: 'Email required'
-            })
-        } else if (password.length === 0) {
-            this.setState({
-                error: 'Password required'
-            })
-        } else {
-            this.getUser(username, password, token)
-            if (this.getUser(username, password, token === true)) {
-                this.props.push('/')
-            }
-        }
-    }
-
     render() {
-        const {username, password, token, trending, error} = this.state
-        console.log(token)
+        const {trending, error} = this.state
         return (
             <React.Fragment>
                 {trending.slice(0, 1).map((movie) => (
-                    <div className="form-background" style={{
+                    <div  key={movie.id} className="form-background" style={{
                         background: `
                         linear-gradient(to top,
                         rgba(15, 15, 15, 1) 0%,
@@ -121,13 +99,13 @@ export default class Login extends Component {
                     `}}>
                         <div className="form-section">
                             <div className="login-form">
-                                <form>
+                                <form onSubmit={this.handleSubmit}>
                                     <p>Sign in</p>
                                     <p className="error">{error}</p>
                                     <div className="form-input-group">
                                         <input
                                             onChange={(event) => {
-                                                this.updateUsername(event.target.value)
+                                                this.usernameHandleChanges(event.target.value)
                                             }}
                                             value={this.state.username}
                                             type="text"
@@ -140,7 +118,7 @@ export default class Login extends Component {
                                     <div className="form-input-group">
                                         <input
                                             onChange={(event) => {
-                                                this.updatePassword(event.target.value)
+                                                this.passwordHandleChanges(event.target.value)
                                             }}
                                             value={this.state.password}
                                             type="password"
@@ -152,22 +130,20 @@ export default class Login extends Component {
                                     </div>
                                     <div className="form-input-group">
                                         <div className="form-input-desc">
-                                            <label for="checkbox" className="input-label">
+                                            <label htmlFor="checkbox" className="input-label">
                                                 <input type="checkbox" id="checkbox" name="checkbox1" value="remember" /> Remember me
                                             </label>
                                         </div>
                                     </div>
                                     <button 
                                         className="button-submit d-flex mx-auto" 
-                                        onClick={() => {
-                                            this.submit(username, password, token)
-                                        }}
+                                        type="submit"
                                     >
                                         <p>Sign in</p>
                                     </button>
                                     <hr/>
                                     <p className="signup">Dont't have an account? 
-                                        <Link>
+                                        <Link to='/register'>
                                             Sign Up
                                         </Link>
                                     </p>
