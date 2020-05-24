@@ -380,16 +380,29 @@ body {
         font-weight: 600;
         font-size: 3rem;
         text-align: center;
+
+        @media(max-width: 1024px) {
+          font-size: 6vh;
+        }
+
+        @media(max-width: 420px) {
+          font-size: 4vh;
+        }
       }
       
       .error {
-        font-size: 1.5rem;
-        height: 20px;
+        font-size: 1.1rem;
+        height: 18px;
         width: 100%;
         margin: auto;
         color: $secondaryRed;
         font-weight: 300;
         text-align: center;
+
+        @media(max-width: 420px) {
+          font-size: 1.5vh;
+          height: 10px;
+        }
       }
 
       .form-input-group {
@@ -397,7 +410,11 @@ body {
         width: 25vw;
         display: block;
         margin: 20px;
-  
+        
+        @media(max-width: 1024px) {
+          width: 50vw;
+        }
+
         .form-input {
           margin: 10px;
           margin-left: 0 !important;
@@ -411,7 +428,19 @@ body {
           padding: 10px;
           border: 2px solid rgba(230, 222, 221, .25);
           border-radius: 20px;
+
+          @media(max-width: 1024px) {
+            width: 50vw;
+            font-size: 1.5vh;
+            border-radius: 35px;
+            padding: 15px;
+          }
   
+          @media(max-width: 420px) {
+            font-size: 1.5vh;
+            padding: 10px;
+          } 
+
           &:hover {
             border-color: rgba(240, 222, 221, .5);
           }
@@ -425,10 +454,84 @@ body {
         .input-label {
           color: $mainLight;
           display: block;
+
+          @media(max-width: 1024px){
+            font-size: 1.5vh;
+
+            input {
+              transform: scale(2);
+              margin-right: 10px;
+            }
+          }
+
+          @media(max-width: 420px) {
+            input {
+              transform: scale(1.2);
+            }
+          }
         }
-  
-        p {
-          font-size: 1.3vh;
+      }
+
+      .form-input-flex {
+        display: flex;
+        height: fit-content;
+        width: 25vw;
+        margin: auto;
+        margin: 20px;
+
+        @media(max-width: 420px) {
+          display: block;
+        }
+
+        @media(max-width: 1024px) {
+          width: 50vw;
+        }
+        
+        .form-input {
+          color: $mainLight;
+          width: 50%;
+          background: transparent;
+          border: none;
+          transition: 0.5s;
+          padding: 10px;
+          border: 2px solid rgba(230, 222, 221, .25);
+          border-radius: 20px;
+
+          &:first-child{
+            margin-right: 1vw;
+
+            @media(max-width: 1024px) {
+              margin-right: 2vw;
+            }
+          }
+
+          @media(width: 1024px) {
+            width: 50%;
+            font-size: 1.5vh;
+            border-radius: 35px;
+            padding: 15px;
+          }
+
+          @media(min-width: 1025px) {
+            padding: 10px;
+          }
+
+          @media(max-width: 420px) {
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 1.5vh;
+            width: 50vw;
+            display: block !important;
+          }
+
+          &:hover {
+            border-color: rgba(240, 222, 221, .5);
+          }
+
+          &:focus {
+            outline: none;
+            border: 1.5px solid rgb(230, 222, 221);
+          }
         }
       }
 
@@ -441,6 +544,10 @@ body {
         font-size: 1rem;
         font-weight: 500;
         letter-spacing: 0;
+
+        @media(max-width: 1024px) {
+          font-size: 1.5vh;
+        }
 
         a {
           margin-left: 1vw;
@@ -476,9 +583,17 @@ body {
       display: inline-block;
       background-color: $mainRed;
       color: $mainLight;
-      font-size: 2.5vh;
       text-align: center !important;
       transition: 0.5s;
+
+      @media(max-width: 1024px) {
+        padding: 10px 25px 10px 25px;
+        border-radius: 30px;
+      }
+
+      @media(max-width: 420px) {
+        padding: 5px 15px 5px 15px;
+      }
 
       &:hover,
       &:focus {
@@ -493,6 +608,10 @@ body {
         
         @media(min-width: 1025px) {
           font-size: 1.5rem !important;
+        }
+
+        @media(max-width: 1024px) {
+          font-size: 2vh;
         }
 
         @media(max-width: 1024px) {
