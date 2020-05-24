@@ -328,74 +328,128 @@ body {
   color: $mainLight;
 }
 
+.form-background {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  background-position: center;
+  background-size: cover !important;
+  background-repeat: no-repeat;
+  filter: grayscale(25%);
+  z-index: 1;
+}
+
 .form-section {
   height: 100vh;
   width: 100vw;
   display: flex;
 
-  .login-form {
+  .login-section-text {
     height: fit-content;
-    padding: 25px;
-    margin: auto;
-    border-radius: 10px;
-    background: #ffffff1d;
-    
-    .error {
-      height: 20px;
-      margin: auto;
-      color: $secondaryRed;
-      font-weight: 300;
-      text-align: center;
-    }
+    width: 50%;
+    padding: 50px;
 
     h1 {
-      color: $mainLight;
-      font-weight: 700;
-    }
-
-    p {
       padding: 0;
       margin: 0;
-      margin-bottom: 25px;
       color: $mainLight;
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 5rem;
+    }
+  }
+
+  .login-form {
+    width: 50%;
+    padding: 50px;
+    background: linear-gradient(to left, rgba(15, 15, 15, .75) 90%, rgba(15, 15, 15, 0));
+    display: flex;
+    margin-left: auto;
+    
+    @media(max-width: 1024px) {
+      width: 100%;
+      background: rgba(15, 15, 15, .75);
     }
 
-    .form-input-group {
-      height: fit-content;
-      width: 25vw;
-      margin: auto;
+    form {
+      margin: auto !important;
 
-      .input-label {
-        margin-top: 10px;
-        padding-top: 15px;
-        padding-bottom: 5px;
-        display: block;
+      p {
+        padding: 0;
+        margin: 0;
         color: $mainLight;
         font-weight: 600;
-        letter-spacing: .9px;
+        font-size: 3rem;
+        text-align: center;
+      }
+      
+      .error {
+        font-size: 1.5rem;
+        height: 20px;
+        width: 100%;
+        margin: auto;
+        color: $secondaryRed;
+        font-weight: 300;
+        text-align: center;
       }
 
-      .form-input {
-        margin: 10px;
-        margin-left: 0 !important;
-        color: $mainLight;
+      .form-input-group {
+        height: fit-content;
         width: 25vw;
-        display: flex;
-        margin: auto;
-        background: transparent;
-        border:none;
-        transition: 0.5s;
-        border-bottom: 2px solid rgba(230, 222, 221, .5);
+        display: block;
+        margin: 20px;
+  
+        .form-input {
+          margin: 10px;
+          margin-left: 0 !important;
+          color: $mainLight;
+          width: 25vw;
+          display: flex;
+          margin: auto;
+          background: transparent;
+          border:none;
+          transition: 0.5s;
+          padding: 10px;
+          border: 2px solid rgba(230, 222, 221, .25);
+          border-radius: 20px;
+  
+          &:hover {
+            border-color: rgba(240, 222, 221, .5);
+          }
 
-        &:focus {
-          outline: none;
-          border-bottom: 1.5px solid rgb(230, 222, 221);
+          &:focus {
+            outline: none;
+            border: 1.5px solid rgb(230, 222, 221);
+          }
+        }
+
+        .input-label {
+          color: $mainLight;
+          display: block;
+        }
+  
+        p {
+          font-size: 1.3vh;
         }
       }
 
-      p {
-        font-size: 1.3vh;
+      hr {
+        margin: 25px;
+        background-color: rgba(240, 222, 221, .25);
+      }
+
+      .signup {
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0;
+
+        a {
+          margin-left: 1vw;
+          font-weight: 700;
+
+          &:hover {
+            text-decoration: none;
+          }
+        }
       }
     }
 
@@ -436,6 +490,10 @@ body {
         margin: 0;
         margin-left: auto;
         margin-right: auto;
+        
+        @media(min-width: 1025px) {
+          font-size: 1.5rem !important;
+        }
 
         @media(max-width: 1024px) {
           font-size: 1.5vh;

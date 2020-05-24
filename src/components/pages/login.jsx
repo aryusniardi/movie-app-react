@@ -1,17 +1,30 @@
 import React, {Component} from 'react'
-import { Redirect } from 'react-router-dom'
+import {useHistory, Link} from 'react-router-dom'
 export default class Login extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            email: "",
+            username: "",
             password: "",
             error: null,
             isLoaded: false,
             token: "",
+            trending: []
 
         }
+    }
+
+    fetchTrending() {
+        fetch('https://api.themoviedb.org/3/trending/all/day?api_key=e526577fc936f61b1a3711898d02e8dd', 
+        ).then((result) => result.json()
+        ).then((result) => {
+            console.log(result)
+            this.setState({
+                trending: result.results,
+                isLoaded: true
+            })
+        })
     }
 
     requestToken() {
@@ -25,48 +38,56 @@ export default class Login extends Component {
                 isLoaded: true,
                 token: result.request_token
             })
-        })
+        }).catch((error) => this.setState({error, isLoaded: true}))
     }
 
-    getUser(email, password, request_token) {
-        fetch('https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=e526577fc936f61b1a3711898d02e8dd',
+    getUser(username, password, token) {
+        const history = useHistory()
+
+        fetch('https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=e526577fc936f61b1a3711898d02e8dd', 
         {
             method: "POST",
             body: JSON.stringify({
-                username: email,
-                password: password,
-                request_token: request_token 
+                'email': `${username}`,
+                'password': `${password}`, 
+                'request_token': `${token}`
             })
-        }).catch((result) => result.json()
-        ).catch((result) => {
-            if (result.success === true || result.success === "true") {
-                var mainScreen= []
-                mainScreen.push('/')
-            } 
-            console.log(result.success)
+        }).then((response) => {
+            if (response.success === true) {
+                history.push('/')
+            } else {
+                this.setState({
+                    error: response.success
+                })
+            }
+        }).catch((error) => {
+            this.setState({
+                error: error.message
+            })
         })
     }
 
     componentDidMount() {
+        this.fetchTrending()
         this.requestToken()
-        this.getUser()
     }
 
-    updateEmail(value) {
+    updateUsername(value) {
+        console.log(`Username : ${value}`)
         this.setState({
-            email: value
+            username: value
         })
     }
 
     updatePassword(value) {
+        console.log(`password : ${value}`)
         this.setState({
             password: value
         })
     }
 
-    submit(email, password, token) {
-        token = this.requestToken()
-        if (email.length === 0) {
+    submit(username, password, token) {
+        if (username.length === 0) {
             this.setState({
                 error: 'Email required'
             })
@@ -74,69 +95,87 @@ export default class Login extends Component {
             this.setState({
                 error: 'Password required'
             })
-        } else if (password.length <= 6) {
-            this.setState({
-                error: 'Password had to be more than 6 characters'
-            })
         } else {
-            this.getUser(email, password, token)
-            console.log (
-                `email : ${email}
-                password: ${password}`
-            )
+            this.getUser(username, password, token)
+            if (this.getUser(username, password, token === true)) {
+                this.props.push('/')
+            }
         }
     }
 
     render() {
-        const {email, password, error} = this.state
+        const {username, password, token, trending, error} = this.state
+        console.log(token)
         return (
             <React.Fragment>
-                <div className="form-section">
-                    <form className="login-form">
-                        <h1>Welcome Back</h1>
-                        <p>Sign in to continue</p>
-                        <p className="error">{error}</p>
-                        <div className="form-input-group">
-                            <label for="email" className="input-label">Username</label>
-                            <input 
-                                onChange={(event) => {
-                                    this.updateEmail(event.target.value)
-                                }}
-                                value={this.state.email}
-                                type="email" 
-                                id="email" 
-                                className="form-input"
-                                required
-                            />
+                {trending.slice(0, 1).map((movie) => (
+                    <div className="form-background" style={{
+                        background: `
+                        linear-gradient(to top,
+                        rgba(15, 15, 15, 1) 0%,
+                        rgba(15, 15, 15, .5) 20%,
+                        rgba(15, 15, 15, .5) 50%,
+                        rgba(15, 15, 15, .5) 75%,
+                        rgba(15, 15, 15, 1) 100%),
+                        url(https://image.tmdb.org/t/p/original${movie.backdrop_path})
+                    `}}>
+                        <div className="form-section">
+                            <div className="login-form">
+                                <form>
+                                    <p>Sign in</p>
+                                    <p className="error">{error}</p>
+                                    <div className="form-input-group">
+                                        <input
+                                            onChange={(event) => {
+                                                this.updateUsername(event.target.value)
+                                            }}
+                                            value={this.state.username}
+                                            type="text"
+                                            id="username"
+                                            placeholder="Username"
+                                            className="form-input"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-input-group">
+                                        <input
+                                            onChange={(event) => {
+                                                this.updatePassword(event.target.value)
+                                            }}
+                                            value={this.state.password}
+                                            type="password"
+                                            id="password"
+                                            placeholder="Password"
+                                            className="form-input"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-input-group">
+                                        <div className="form-input-desc">
+                                            <label for="checkbox" className="input-label">
+                                                <input type="checkbox" id="checkbox" name="checkbox1" value="remember" /> Remember me
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button 
+                                        className="button-submit d-flex mx-auto" 
+                                        onClick={() => {
+                                            this.submit(username, password, token)
+                                        }}
+                                    >
+                                        <p>Sign in</p>
+                                    </button>
+                                    <hr/>
+                                    <p className="signup">Dont't have an account? 
+                                        <Link>
+                                            Sign Up
+                                        </Link>
+                                    </p>
+                                </form>
+                            </div>
                         </div>
-                        <div className="form-input-group">
-                            <label for="password" className="input-label">Password</label>
-                            <input 
-                                onChange={(event) => {
-                                    this.updatePassword(event.target.value)
-                                }}
-                                value={this.state.password}
-                                type="password" 
-                                id="password" 
-                                className="form-input"
-                                required
-                            />
-                        </div>
-                        <div className="form-input-desc">
-                            <label for="checkbox" className="input-label">
-                                <input type="checkbox" id="checkbox" name="checkbox1" value="remember"/> Remember me
-                            </label>
-                        </div>
-                        <button 
-                            className="button-submit d-flex mx-auto" 
-                            onClick={() => {
-                                this.submit(email, password)
-                            }}
-                        >
-                            <p>Login</p>
-                        </button>
-                    </form>
-                </div>
+                    </div>
+                ))}
             </React.Fragment>
         )
     }
