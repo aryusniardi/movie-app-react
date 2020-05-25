@@ -38,6 +38,12 @@ export default class Login extends Component {
         ).then((response) => {
             if (response.success === true) {
                 console.log(username, password, token)
+                alert(`
+                    Login successfull!
+                    ${username}
+                    ${password}
+                    ${token}
+                `)
                 history.push('/')
             }
         }).catch((error) => console.log("Login error", error))

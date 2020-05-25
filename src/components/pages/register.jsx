@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 export default class Register extends Component {
   constructor(props) {
@@ -17,6 +18,35 @@ export default class Register extends Component {
       trending: []
 
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  static propTypes = {
+    history: PropTypes.object.isRequired
+  }
+
+  handleSubmit(event) {
+    const {firstName, lastName, username, password, confirmation} = this.state
+    const {history} = this.props
+
+    if ( firstName.length && lastName.length && username.length && password.length && confirmation.length > 0) {
+      if (password.length > 5) {
+        if (password === confirmation) {
+          alert("Registration successfull !")
+          history.push('/login')
+        } else {
+          this.setState({
+            error: "Password doesn't match..."
+          })
+        }
+      } else {
+        this.setState({
+          error: 'Password minimum 6 characters'
+        })
+      }
+    }
+
+    event.preventDefault()
   }
 
   fetchTrending() {
@@ -65,33 +95,15 @@ export default class Register extends Component {
     })
   }
 
-  submit(username, password, token) {
-    if (username.length === 0) {
-      this.setState({
-        error: 'Email required'
-      })
-    } else if (password.length === 0) {
-      this.setState({
-        error: 'Password required'
-      })
-    } else {
-      this.getUser(username, password, token)
-      if (this.getUser(username, password, token === true)) {
-        this.props.push('/')
-      }
-    }
-  }
-
   render() {
-    const { firstName, lastName, username, password, confirmation, token, trending, error } = this.state
-    console.log(token)
+    const { trending, error } = this.state
     return (
       <React.Fragment>
-        {trending.slice(18, 19).map((movie) => (
-          <div className="form-background" style={{
+        {trending.slice(13, 14).map((movie) => (
+          <div key={movie.id} className="form-background" style={{
               background: `
               linear-gradient(to top,
-              rgba(15, 15, 15, 1) 0%,
+              rgba(15, 15, 15, 0) 0%,
               rgba(15, 15, 15, .5) 20%,
               rgba(15, 15, 15, .5) 50%,
               rgba(15, 15, 15, .5) 75%,
@@ -100,7 +112,7 @@ export default class Register extends Component {
           `}}>
             <div className="form-section">
               <div className="login-form">
-                <form>
+                <form onSubmit={this.handleSubmit}>
                   <p>Register</p>
                   <p className="error">{error}</p>
                   <div className="form-input-flex">
@@ -169,15 +181,13 @@ export default class Register extends Component {
                   </div>
                   <button
                     className="button-submit d-flex mx-auto"
-                    onClick={() => {
-                      this.submit(username, password, token)
-                    }}
+                    type="submit"
                   >
-                    <p>Sign in</p>
+                    <p>Sign up</p>
                   </button>
                   <hr />
                   <p className="signup">Already have an account ?
-                    <Link> Sign In </Link>
+                    <Link to='/login'> Sign In </Link>
                   </p>
                 </form>
               </div>
