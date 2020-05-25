@@ -73,6 +73,13 @@ export default class TopRating extends React.Component {
     componentDidMount() {
         this.fetchTopRatedMovie()
         this.fetchTopRatedTv()
+
+        const rememberMe = localStorage.getItem('rememberMe') === 'true'
+        const token = rememberMe ? localStorage.getItem('token') : ''
+        this.setState({
+            token, rememberMe
+        })
+        console.log(token, rememberMe)
     }
 
     render() {

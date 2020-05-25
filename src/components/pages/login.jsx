@@ -8,10 +8,11 @@ export default class Login extends Component {
         this.state = {
             username: "",
             password: "",
+            rememberMe: false,
+            token: "",
+            trending: [],
             error: null,
             isLoaded: false,
-            token: "",
-            trending: []
 
         }
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -21,8 +22,17 @@ export default class Login extends Component {
         history: PropTypes.object.isRequired
     };
 
+    handleChange = (event) => {
+        const input = event.target;
+        const value = input.type === 'checkbox' ? input.checked : input.value
+
+        this.setState({
+            [input.name]: value
+        })
+    }
+
     handleSubmit(event) {
-        const {username, password, token} = this.state
+        const {username, password, rememberMe, token} = this.state
         const { history } = this.props;
         
         fetch('https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=e526577fc936f61b1a3711898d02e8dd', 
@@ -37,14 +47,26 @@ export default class Login extends Component {
         }).then((response) => response.json()
         ).then((response) => {
             if (response.success === true) {
-                console.log(username, password, token)
-                alert(`
-                    Login successfull!
+                if (rememberMe === true) {
+                    localStorage.setItem('rememberMe', rememberMe)
+                    localStorage.setItem('token', rememberMe ? token : '')
+
+                } else {
+                    alert(`
+                        Login successfull!
+                        ${username}
+                        ${password}
+                        ${token}
+                    `)
+                }
+                history.push('/')
+            } else {
+                console.log(`
                     ${username}
                     ${password}
                     ${token}
+                    ${rememberMe}
                 `)
-                history.push('/')
             }
         }).catch((error) => console.log("Login error", error))
         event.preventDefault()
@@ -118,9 +140,8 @@ export default class Login extends Component {
                                     <p className="error">{error}</p>
                                     <div className="form-input-group">
                                         <input
-                                            onChange={(event) => {
-                                                this.usernameHandleChanges(event.target.value)
-                                            }}
+                                            name="username"
+                                            onChange={this.handleChange}
                                             value={this.state.username}
                                             type="text"
                                             id="username"
@@ -131,9 +152,8 @@ export default class Login extends Component {
                                     </div>
                                     <div className="form-input-group">
                                         <input
-                                            onChange={(event) => {
-                                                this.passwordHandleChanges(event.target.value)
-                                            }}
+                                            name="password"
+                                            onChange={this.handleChange}
                                             value={this.state.password}
                                             type="password"
                                             id="password"
@@ -145,7 +165,7 @@ export default class Login extends Component {
                                     <div className="form-input-group">
                                         <div className="form-input-desc">
                                             <label htmlFor="checkbox" className="input-label">
-                                                <input type="checkbox" id="checkbox" name="checkbox1" value="remember" /> Remember me
+                                                <input type="checkbox" id="checkbox" name="rememberMe" value="remember" checked={this.state.rememberMe} onChange={this.handleChange}/> Remember me
                                             </label>
                                         </div>
                                     </div>
