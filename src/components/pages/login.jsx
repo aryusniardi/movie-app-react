@@ -52,6 +52,7 @@ export default class Login extends Component {
                     localStorage.setItem('rememberMe', rememberMe)
                     localStorage.setItem('token', rememberMe ? token : '')
                 } else {
+                    localStorage.setItem('token', token)
                     alert(`
                         Login successfull!
                         ${username}

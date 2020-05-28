@@ -1,6 +1,5 @@
-import React, {
-    useState
-} from 'react';
+import React, {useState} from 'react';
+import { useHistory } from "react-router-dom"
 import {
     Container,
     Collapse,
@@ -11,7 +10,8 @@ import {
     NavItem,
     NavLink,
     FormGroup,
-    Label
+    Label,
+    Button
 } from 'reactstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -19,8 +19,11 @@ import Logo from '../../assets/logo.png'
 
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
+  const rememberMe = localStorage.getItem('rememberMe') === 'true'
+  const token = rememberMe ? localStorage.getItem('token') : ''
+  let history = useHistory()
+  console.log(token)
 
   return (
     <React.Fragment>
@@ -50,6 +53,13 @@ const Navigation = (props) => {
                 <input type="text" id="searchInput" placeholder="Search" className="navbar-input"/>
                 <Label for="searchInput" className="input-label"><FontAwesomeIcon icon={faSearch} mask={'fab'} className="mr-2 centered v-50"/></Label>
             </FormGroup>
+            <Button color="danger"
+              className="mx-3"
+              onClick={() => {
+                localStorage.setItem('token', '')
+                history.push('/login')
+              }}
+            >Log Out</Button>
           </Collapse>
         </Container>
       </Navbar>

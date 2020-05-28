@@ -63,26 +63,30 @@ export default class TopRating extends React.Component {
     }
 
     static propTypes = {
-    match: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
+        match: PropTypes.object.isRequired,
+        location: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired,
     };
 
     componentDidMount() {
-        this.fetchTopRatedMovie()
-        this.fetchTopRatedTv()
-
         const { history } = this.props;
         const rememberMe = localStorage.getItem('rememberMe') === 'true'
         const token = rememberMe ? localStorage.getItem('token') : ''
-        this.setState({
-            token, rememberMe
-        })
-        console.log(token, rememberMe)
 
-        if (token === null) {
+        if (token === null || token === '') {
             history.push('/login')
+        } else {
+            this.setState({
+                token, rememberMe
+            })
         }
+
+        this.fetchTopRatedMovie()
+        this.fetchTopRatedTv()
+
+        // console.log(token, rememberMe)
+
+        
     }
 
     render() {
