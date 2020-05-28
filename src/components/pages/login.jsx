@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import PropTypes from "prop-types";
+
 export default class Login extends Component {
     constructor(props) {
         super(props)
@@ -50,7 +51,6 @@ export default class Login extends Component {
                 if (rememberMe === true) {
                     localStorage.setItem('rememberMe', rememberMe)
                     localStorage.setItem('token', rememberMe ? token : '')
-
                 } else {
                     alert(`
                         Login successfull!
@@ -102,20 +102,6 @@ export default class Login extends Component {
     componentDidMount() {
         this.fetchTrending()
         this.requestToken()
-    }
-
-    usernameHandleChanges(value) {
-        console.log(`Username : ${value}`)
-        this.setState({
-            username: value
-        })
-    }
-
-    passwordHandleChanges(value) {
-        console.log(`password : ${value}`)
-        this.setState({
-            password: value
-        })
     }
 
     render() {

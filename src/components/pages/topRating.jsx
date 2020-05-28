@@ -6,6 +6,7 @@ import Video from '../component/video'
 import PropTypes from "prop-types";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Navbar from '../component/navbar'
 
 export default class TopRating extends React.Component {
     constructor(props) {
@@ -26,7 +27,6 @@ export default class TopRating extends React.Component {
                 method: "GET",
             }
         ).then((result) => result.json()).then((result) => {
-            console.log(result);
             this.setState({
                 isLoaded: true,
                 credits: result.cast,
@@ -41,7 +41,6 @@ export default class TopRating extends React.Component {
             }
         ).then((result) => result.json()
         ).then((result) => {
-            console.log(result)
             this.setState({
                 isLoaded: true,
                 topRatedMovie: result.results
@@ -53,7 +52,6 @@ export default class TopRating extends React.Component {
         fetch('https://api.themoviedb.org/3/tv/top_rated?api_key=e526577fc936f61b1a3711898d02e8dd&language=en-US&page=1', {
             method: "GET"
         }).then((result) => result.json()).then((result) => {
-            console.log(result)
             this.setState({
                 isLoaded: true,
                 topRatedTv: result.results
@@ -74,12 +72,17 @@ export default class TopRating extends React.Component {
         this.fetchTopRatedMovie()
         this.fetchTopRatedTv()
 
+        const { history } = this.props;
         const rememberMe = localStorage.getItem('rememberMe') === 'true'
         const token = rememberMe ? localStorage.getItem('token') : ''
         this.setState({
             token, rememberMe
         })
         console.log(token, rememberMe)
+
+        if (token === null) {
+            history.push('/login')
+        }
     }
 
     render() {
@@ -120,6 +123,7 @@ export default class TopRating extends React.Component {
         return (
             <React.Fragment>
                 <>
+                    <Navbar/>
                     {topRatedMovie.slice(9, 10).map((movie) => (
                         <>
                             <MovieJumbotron

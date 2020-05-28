@@ -619,5 +619,52 @@ body {
         }
       }
     }
+    
+    .button-logout {
+      margin: auto;
+      width: 50%;
+      margin-top: 25px;
+      padding: 5px 25px 5px 25px;
+      border: none;
+      border-radius: 20px;
+      display: inline-block;
+      background-color: red;
+      color: $mainLight;
+      text-align: center !important;
+      transition: 0.5s;
+
+      @media(max-width: 1024px) {
+        padding: 10px 25px 10px 25px;
+        border-radius: 30px;
+      }
+
+      @media(max-width: 420px) {
+        padding: 5px 15px 5px 15px;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: rgb(154, 0, 0);
+        outline: none;
+      }
+
+      p {
+        margin: 0;
+        margin-left: auto;
+        margin-right: auto;
+
+        @media(min-width: 1025px) {
+          font-size: 1.5rem !important;
+        }
+
+        @media(max-width: 1024px) {
+          font-size: 2vh;
+        }
+
+        @media(max-width: 1024px) {
+          font-size: 1.5vh;
+        }
+      }
+    }
   }
 }

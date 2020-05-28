@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 
-export default class Register extends Component {
+class Register extends Component {
   constructor(props) {
     super(props)
 
@@ -23,6 +24,15 @@ export default class Register extends Component {
 
   static propTypes = {
     history: PropTypes.object.isRequired
+  }
+
+  handleChange = (event) => {
+    const input = event.target;
+    const value = input.type === 'checkbox' ? input.checked : input.value
+
+    this.setState({
+      [input.name]: value
+    })
   }
 
   handleSubmit(event) {
@@ -65,36 +75,6 @@ export default class Register extends Component {
     this.fetchTrending()
   }
 
-  firstNameHandleChanges(value) {
-    this.setState({
-      firstName: value
-    })
-  }
-
-  lastNameHandleChanges(value) {
-    this.setState({
-      lastName: value
-    })
-  }
-
-  usernameHandleChanges(value) {
-    this.setState({
-      username: value
-    })
-  }
-
-  passwordhandleChanges(value) {
-    this.setState({
-      password: value
-    })
-  }
-
-  confirmationHandleChanges(value) {
-    this.setState({
-      confirmation: value
-    })
-  }
-
   render() {
     const { trending, error } = this.state
     return (
@@ -117,9 +97,7 @@ export default class Register extends Component {
                   <p className="error">{error}</p>
                   <div className="form-input-flex">
                     <input
-                      onChange={(event) => {
-                        this.firstNameHandleChanges(event.target.value)
-                      }}
+                      onChange={this.handleChange}
                       value={this.state.firstName}
                       type="text"
                       id="firstName"
@@ -129,9 +107,7 @@ export default class Register extends Component {
                     />
 
                     <input
-                      onChange={(event) => {
-                        this.lastNameHandleChanges(event.target.value)
-                      }}
+                      onChange={this.handleChange}
                       value={this.state.lastName}
                       type="text"
                       id="lastName"
@@ -142,9 +118,7 @@ export default class Register extends Component {
                   </div>
                   <div className="form-input-group">
                     <input
-                      onChange={(event) => {
-                        this.usernameHandleChanges(event.target.value)
-                      }}
+                      onChange={this.handleChange}
                       value={this.state.username}
                       type="text"
                       id="username"
@@ -155,9 +129,7 @@ export default class Register extends Component {
                   </div>
                   <div className="form-input-group">
                     <input
-                      onChange={(event) => {
-                        this.passwordhandleChanges(event.target.value)
-                      }}
+                      onChange={this.handleChange}
                       value={this.state.password}
                       type="password"
                       id="password"
@@ -168,9 +140,7 @@ export default class Register extends Component {
                   </div>
                   <div className="form-input-group">
                     <input
-                      onChange={(event) => {
-                        this.confirmationHandleChanges(event.target.value)
-                      }}
+                      onChange={this.handleChange}
                       value={this.state.confirmation}
                       type="password"
                       id="confimation-password"
@@ -198,3 +168,9 @@ export default class Register extends Component {
     )
   }
 }
+
+const mapStateToProps = (response) => ({
+  response
+})
+
+export default connect(mapStateToProps)(Register)

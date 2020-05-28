@@ -1,7 +1,5 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
-import Navbar from './components/component/navbar'
-import Footer from './components/component/footer'
 import MovieList from './components/templates/MovieList';
 import Detail from "./components/templates/Detail";
 import Register from './components/pages/register';
